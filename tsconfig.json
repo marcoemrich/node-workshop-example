@@ -5,7 +5,6 @@
     "outDir": "dist",
     "rootDir": ".",
     "strict": true,
-    "strictNullChecks": true,
     "esModuleInterop": true,
     "sourceMap": false,
     "resolveJsonModule": true,
