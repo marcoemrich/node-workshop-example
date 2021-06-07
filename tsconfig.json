@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "commonjs",
+    "outDir": "dist",
+    "rootDir": ".",
+    "strict": true,
+    "strictNullChecks": true,
+    "esModuleInterop": true,
+    "sourceMap": false,
+    "resolveJsonModule": true,
+  },
+  "exclude": ["node_modules", ".vscode"]
+}
