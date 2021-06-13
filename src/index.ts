@@ -8,3 +8,4 @@ const showPeople = async () => {
 };
 
 showPeople();
+// console.log("Before Fetch");
