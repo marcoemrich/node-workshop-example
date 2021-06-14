@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc --project tsconfig.json",
-    "build:docker": "docker build -f containers/Dockerfile --build-arg NODE_ENV=development . -t my_hello_world",
+    "build:docker": "docker build -f containers/Dockerfile --build-arg NODE_ENV=development . -t backend",
     "start": "ts-node ./src/index.ts",
     "start:dist": "node ./dist/index.js",
+    "start:docker": "docker-compose -f docker-compose-local.yml up",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -27,6 +28,8 @@
   },
   "dependencies": {
     "@typescript-eslint/parser": "^4.26.0",
-    "date-fns": "^2.22.1"
+    "date-fns": "^2.22.1",
+    "knex": "^0.95.6",
+    "pg": "^8.6.0"
   }
 }

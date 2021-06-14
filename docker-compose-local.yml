@@ -1,0 +1,25 @@
+version: "3"
+services:
+  backend:
+    image: backend
+    build:
+      dockerfile: containers/Dockerfile
+      context: .
+    ports:
+      - "1337:1337" #HTTP
+# make sure the following env variables are setup properly ...
+    # @see .env file (will be loaded by docker-compose automatically)
+    env_file:
+      - ./.env
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: foofoofoo1337
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
