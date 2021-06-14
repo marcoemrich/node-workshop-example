@@ -2,33 +2,47 @@ import * as http from "http";
 import knex from "knex";
 
 console.log("listening to localhost:1337 ...");
-console.log("env", process.env);
+// console.log("env", process.env);
 
-interface city {
+interface City {
   id: number;
   name: string;
 }
 
+const PG_CONNECTION_STRING = "postgresql://postgres:foofoofoo1337@localhost:5432/postgres";
+
+// const PG_CONNECTION_STRING = process.env.PG_CONNECTION_STRING
+
+console.log("PG_CONNECTION_STRING", PG_CONNECTION_STRING);
+
 const pg = knex({
   client: "pg",
-  connection: process.env.PG_CONNECTION_STRING,
-  searchPath: ["knex", "public"],
+  connection: PG_CONNECTION_STRING,
 });
 
-const select = knex<City>("cities").select({
-  city: "a.city",
-});
+// const cities = knex<City>("cities").select("name");
 
-console.log("knex", select);
+// console.log("knex", cities);
+
+pg.select("*")
+  .from("cities")
+  .then((rows) => console.log(rows))
+  .catch((e) => console.log(e));
 
 http
-  .createServer((_req, res) => {
+  .createServer((req, res) => {
+    console.log(JSON.stringify(req.url));
+
     res.writeHead(200, {
       "Content-Type": "text/plain",
     });
-
-    res.write("Hello, World!\n");
-    console.log("Answering Client!");
-    res.end();
+    pg.select("name")
+      .from("cities")
+      .where("id", req.url?.slice(1))
+      .then((c) => {
+        res.write(c[0].name);
+      })
+      .catch((e) => console.log(e))
+      .finally(() => res.end());
   })
   .listen(1337);
